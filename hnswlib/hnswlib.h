@@ -4,6 +4,9 @@
 #define USE_SSE
 #ifdef __AVX__
 #define USE_AVX
+#ifdef __FMA__
+#define USE_FMA
+#endif
 #endif
 #endif
 #endif

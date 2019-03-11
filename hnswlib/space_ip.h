@@ -39,13 +39,21 @@ namespace hnswlib {
             pVect1 += 8;
             __m256 v2 = _mm256_loadu_ps(pVect2);
             pVect2 += 8;
+#if defined(USE_FMA)
+            sum256 = _mm256_fmadd_ps(v1, v2, sum256);
+#else
             sum256 = _mm256_add_ps(sum256, _mm256_mul_ps(v1, v2));
+#endif
 
             v1 = _mm256_loadu_ps(pVect1);
             pVect1 += 8;
             v2 = _mm256_loadu_ps(pVect2);
             pVect2 += 8;
+#if defined(USE_FMA)
+            sum256 = _mm256_fmadd_ps(v1, v2, sum256);
+#else
             sum256 = _mm256_add_ps(sum256, _mm256_mul_ps(v1, v2));
+#endif
         }
 
         __m128 v1, v2;
@@ -56,7 +64,11 @@ namespace hnswlib {
             pVect1 += 4;
             v2 = _mm_loadu_ps(pVect2);
             pVect2 += 4;
+#if defined(USE_FMA)
+            sum_prod = _mm_fmadd_ps(v1, v2, sum_prod);
+#else
             sum_prod = _mm_add_ps(sum_prod, _mm_mul_ps(v1, v2));
+#endif
         }
 
         _mm_store_ps(TmpRes, sum_prod);
@@ -87,25 +99,41 @@ namespace hnswlib {
             pVect1 += 4;
             v2 = _mm_loadu_ps(pVect2);
             pVect2 += 4;
+#if defined(USE_FMA)
+            sum_prod = _mm_fmadd_ps(v1, v2, sum_prod);
+#else
             sum_prod = _mm_add_ps(sum_prod, _mm_mul_ps(v1, v2));
+#endif
 
             v1 = _mm_loadu_ps(pVect1);
             pVect1 += 4;
             v2 = _mm_loadu_ps(pVect2);
             pVect2 += 4;
+#if defined(USE_FMA)
+            sum_prod = _mm_fmadd_ps(v1, v2, sum_prod);
+#else
             sum_prod = _mm_add_ps(sum_prod, _mm_mul_ps(v1, v2));
+#endif
 
             v1 = _mm_loadu_ps(pVect1);
             pVect1 += 4;
             v2 = _mm_loadu_ps(pVect2);
             pVect2 += 4;
+#if defined(USE_FMA)
+            sum_prod = _mm_fmadd_ps(v1, v2, sum_prod);
+#else
             sum_prod = _mm_add_ps(sum_prod, _mm_mul_ps(v1, v2));
+#endif
 
             v1 = _mm_loadu_ps(pVect1);
             pVect1 += 4;
             v2 = _mm_loadu_ps(pVect2);
             pVect2 += 4;
+#if defined(USE_FMA)
+            sum_prod = _mm_fmadd_ps(v1, v2, sum_prod);
+#else
             sum_prod = _mm_add_ps(sum_prod, _mm_mul_ps(v1, v2));
+#endif
         }
 
         while (pVect1 < pEnd2) {
@@ -113,7 +141,11 @@ namespace hnswlib {
             pVect1 += 4;
             v2 = _mm_loadu_ps(pVect2);
             pVect2 += 4;
+#if defined(USE_FMA)
+            sum_prod = _mm_fmadd_ps(v1, v2, sum_prod);
+#else
             sum_prod = _mm_add_ps(sum_prod, _mm_mul_ps(v1, v2));
+#endif
         }
 
         _mm_store_ps(TmpRes, sum_prod);
@@ -147,13 +179,21 @@ namespace hnswlib {
             pVect1 += 8;
             __m256 v2 = _mm256_loadu_ps(pVect2);
             pVect2 += 8;
+#if defined(USE_FMA)
+            sum256 = _mm256_fmadd_ps(v1, v2, sum256);
+#else
             sum256 = _mm256_add_ps(sum256, _mm256_mul_ps(v1, v2));
+#endif
 
             v1 = _mm256_loadu_ps(pVect1);
             pVect1 += 8;
             v2 = _mm256_loadu_ps(pVect2);
             pVect2 += 8;
+#if defined(USE_FMA)
+            sum256 = _mm256_fmadd_ps(v1, v2, sum256);
+#else
             sum256 = _mm256_add_ps(sum256, _mm256_mul_ps(v1, v2));
+#endif
         }
 
         _mm256_store_ps(TmpRes, sum256);

@@ -38,14 +38,22 @@ namespace hnswlib {
             v2 = _mm256_loadu_ps(pVect2);
             pVect2 += 8;
             diff = _mm256_sub_ps(v1, v2);
+#if defined(USE_FMA)
+            sum = _mm256_fmadd_ps(diff, diff, sum);
+#else
             sum = _mm256_add_ps(sum, _mm256_mul_ps(diff, diff));
+#endif
 
             v1 = _mm256_loadu_ps(pVect1);
             pVect1 += 8;
             v2 = _mm256_loadu_ps(pVect2);
             pVect2 += 8;
             diff = _mm256_sub_ps(v1, v2);
+#if defined(USE_FMA)
+            sum = _mm256_fmadd_ps(diff, diff, sum);
+#else
             sum = _mm256_add_ps(sum, _mm256_mul_ps(diff, diff));
+#endif
         }
 
         _mm256_store_ps(TmpRes, sum);
@@ -79,28 +87,44 @@ namespace hnswlib {
             v2 = _mm_loadu_ps(pVect2);
             pVect2 += 4;
             diff = _mm_sub_ps(v1, v2);
+#if defined(USE_FMA)
+            sum = _mm_fmadd_ps(diff, diff, sum);
+#else
             sum = _mm_add_ps(sum, _mm_mul_ps(diff, diff));
+#endif
 
             v1 = _mm_loadu_ps(pVect1);
             pVect1 += 4;
             v2 = _mm_loadu_ps(pVect2);
             pVect2 += 4;
             diff = _mm_sub_ps(v1, v2);
+#if defined(USE_FMA)
+            sum = _mm_fmadd_ps(diff, diff, sum);
+#else
             sum = _mm_add_ps(sum, _mm_mul_ps(diff, diff));
+#endif
 
             v1 = _mm_loadu_ps(pVect1);
             pVect1 += 4;
             v2 = _mm_loadu_ps(pVect2);
             pVect2 += 4;
             diff = _mm_sub_ps(v1, v2);
+#if defined(USE_FMA)
+            sum = _mm_fmadd_ps(diff, diff, sum);
+#else
             sum = _mm_add_ps(sum, _mm_mul_ps(diff, diff));
+#endif
 
             v1 = _mm_loadu_ps(pVect1);
             pVect1 += 4;
             v2 = _mm_loadu_ps(pVect2);
             pVect2 += 4;
             diff = _mm_sub_ps(v1, v2);
+#if defined(USE_FMA)
+            sum = _mm_fmadd_ps(diff, diff, sum);
+#else
             sum = _mm_add_ps(sum, _mm_mul_ps(diff, diff));
+#endif
         }
         _mm_store_ps(TmpRes, sum);
         float res = TmpRes[0] + TmpRes[1] + TmpRes[2] + TmpRes[3];
@@ -133,7 +157,11 @@ namespace hnswlib {
             v2 = _mm_loadu_ps(pVect2);
             pVect2 += 4;
             diff = _mm_sub_ps(v1, v2);
+#if defined(USE_FMA)
+            sum = _mm_fmadd_ps(diff, diff, sum);
+#else
             sum = _mm_add_ps(sum, _mm_mul_ps(diff, diff));
+#endif
         }
         _mm_store_ps(TmpRes, sum);
         float res = TmpRes[0] + TmpRes[1] + TmpRes[2] + TmpRes[3];
